@@ -11,8 +11,8 @@ const customerSchema = Schema({
     codeCustomer: {
         type: String,
         trim: true,
-        required: [true, 'El codigo del cliente es obligatorio'],
-        unique: true
+        /*: [true, 'El codigo del cliente es obligatorio'],
+        unique: true*/
     },
     name: {
         type: String,
