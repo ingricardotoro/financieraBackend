@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const mongooseUniqueValidator = require('mongoose-unique-validator');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const customerSchema = Schema({
