@@ -65,6 +65,10 @@ const customerSchema = Schema({
         type: String,
         trim: true,
     },
+    profesion: {
+        type: String,
+        trim: true,
+    },
     city: {
         type: String,
         trim: true,
