@@ -20,7 +20,6 @@ const { createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustom
 //=======================
 //Rutas para crear nuevos clientes (POST) .../api/customers
 router.post('/', [
-    check('personid', 'El personId es obligatorio').not().isEmpty(),
     check('codeCustomer', 'El codeCustomer es obligatorio').not().isEmpty(),
     check('name', 'El nombre de la persona es obligatorio').not().isEmpty(),
     check('lastname', 'El apellido de la persona es obligatorio').not().isEmpty(),

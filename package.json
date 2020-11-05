@@ -1,21 +1,25 @@
 {
-  "name": "back_financiera",
-  "version": "1.0.0",
-  "description": "Servidor APi para sistema financiero de Prestamos",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Ing. Marvin Ricardo Toro",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "express-validator": "^6.6.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.12",
-    "mongoose-unique-validator": "^2.0.3"
-  }
+    "name": "back_financiera",
+    "version": "1.0.0",
+    "description": "Servidor APi para sistema financiero de Prestamos",
+    "main": "index.js",
+    "engines": {
+        "node": "14.8.0"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+
+    "author": "Ing. Marvin Ricardo Toro",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "express-validator": "^6.6.1",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.10.12",
+        "mongoose-unique-validator": "^2.0.3"
+    }
 }
