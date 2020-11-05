@@ -37,6 +37,7 @@ const createRequest = async(req, res) => {
         rate,
         frequency,
         quota,
+        quotaValue,
         totalInterest,
         closingCost,
         startDate,
@@ -59,6 +60,7 @@ const createRequest = async(req, res) => {
         rate,
         frequency,
         quota,
+        quotaValue,
         totalInterest,
         closingCost,
         startDate,
@@ -78,7 +80,7 @@ const createRequest = async(req, res) => {
             res.status(201).json({
                 ok: true,
                 msg: 'Solicitud creada exitosamente',
-                newCustomer
+                newRequest
             })
         } else {
             res.status(500).json({
@@ -91,7 +93,7 @@ const createRequest = async(req, res) => {
         console.log(error)
         res.status(500).json({
             ok: false,
-            msg: "Error creating New Rquest",
+            msg: "Error creating New Request-A",
             errro: error
         })
     }

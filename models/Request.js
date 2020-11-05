@@ -11,8 +11,9 @@ const requestSchema = Schema({
     codeRequest: {
         type: String,
         trim: true,
-        /*: [true, 'El codigo del cliente es obligatorio'],
-        unique: true*/
+        default: "S-110",
+        required: [true, 'El codigo del cliente es obligatorio'],
+        /* unique: true*/
     },
     typeLoan: {
         type: String,
@@ -38,6 +39,10 @@ const requestSchema = Schema({
         type: Number,
         required: [true, 'La couta es obligatoria'],
     },
+    quotaValue: {
+        type: Number,
+        required: [true, 'El Valor de la cuota es obligatoria'],
+    },
     totalInterest: {
         type: Number,
         required: [true, 'El Total de interes es obligatorio'],
@@ -62,26 +67,27 @@ const requestSchema = Schema({
     stateRequest: {
         type: String,
         trim: true,
+        //required: [true, 'El estado de la solicitud es obligatoria'],
         default: "Pendiente"
     },
 
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, 'El id del empleado es obligatorio'],
+        //required: [true, 'El id del empleado es obligatorio'],
     },
     approvedBy: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, 'El id del empleado es obligatorio'],
+        //required: [true, 'El id del empleado es obligatorio'],
     },
     declinedBy: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, 'El id del empleado es obligatorio'],
+        //required: [true, 'El id del empleado es obligatorio'],
     },
 
 }, { timestamps: true })
 
 requestSchema.plugin(uniqueValidator, { message: '{PATH} debe ser único' });
-module.exports = model('Customer', requestSchema)
+module.exports = model('Request', requestSchema)

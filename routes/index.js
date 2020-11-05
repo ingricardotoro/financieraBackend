@@ -11,6 +11,6 @@ const app = express()
 app.use('/api/customers', require('./customers'))
 
 //Ruta para la gestion de Solicitudes
-//app.use('/api/requests', require('./requests'))
+app.use('/api/requests', require('./requests'))
 
 module.exports = app
