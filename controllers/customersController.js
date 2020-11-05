@@ -1,4 +1,4 @@
-const Customer = require('../models/customer')
+const Customer = require('../models/Customer')
     //const Contact = require('../models/contact')
 
 //funcion para listar todos los clientes
