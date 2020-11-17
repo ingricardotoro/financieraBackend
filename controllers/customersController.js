@@ -1,4 +1,6 @@
 const Customer = require('../models/Customer')
+const Person = require('../models/Person')
+
     //const Contact = require('../models/contact')
 
 //funcion para listar todos los clientes
@@ -105,83 +107,6 @@ const createCustomer = async(req, res) => {
             msg: "Error creating New Person"
         })
     }
-
-    } 
-
-
-       
-    //******************************************************************************* */
-
-    const {
-        
-        codeCustomer,
-        name,
-        lastname,
-        identidad,
-        gender,
-        rtn,
-        fec_nac,
-        phone1,
-        phone2,
-        email1,
-        email2,
-        profesion,
-        city,
-        location,
-        photo,
-        Loanctive,
-        defaulter,
-        active
-    } = req.body
-
-        //creamos una instancia del objeto Persona
-        newCustomer = new Customer({
-            codeCustomer,
-            name,
-            lastname,
-            identidad,
-            gender,
-            rtn,
-            fec_nac,
-            phone1,
-            phone2,
-            email1,
-            email2,
-            profesion,
-            city,
-            location,
-            photo,
-            Loanctive,
-            defaulter,
-            active
-        })
-
-        try {
-
-            if(await newCustomer.save()) {
-            
-                //Cliente creado exitosamente
-                res.status(201).json({
-                    ok: true,
-                    msg: 'Cliente creado exitosamente',
-                    newCustomer
-                })
-            }
-            else{
-                res.status(500).json({
-                    ok: false,
-                    msg: "Error creating New Customer"
-                })
-            }
-                
-        } catch (error) {
-            console.log(error)
-            res.status(500).json({
-                ok: false,
-                msg: "Error creating New Customer",
-                errro:error
-            })
-        }
   
 }
 
