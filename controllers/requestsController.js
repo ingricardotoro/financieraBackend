@@ -1,5 +1,5 @@
 const Request = require('../models/Request')
-    //const Contact = require('../models/contact')
+    //const Contact = require('../models/request')
 
 //funcion para listar todos los clientes
 const listRequest = async(req, res) => {

@@ -9,11 +9,10 @@ const requestSchema = Schema({
         required: [true, 'El id del cliente es obligatorio'],
     },
     codeRequest: {
-        type: String,
+        type: Number,
         trim: true,
-        default: "S-110",
-        required: [true, 'El codigo del cliente es obligatorio'],
-        /* unique: true*/
+        required: [true, 'El codigo del Solicitud es obligatorio'],
+        unique: true
     },
     typeLoan: {
         type: String,

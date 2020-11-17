@@ -1,26 +1,18 @@
 const { Schema, model } = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const customerSchema = Schema({
+const avalSchema = Schema({
 
     personId: {
         type: Schema.Types.ObjectId,
         ref: 'Person',
         required: [true, 'El id de la persona es obligatorio'],
     },
-    codeCustomer: {
+    codeAval: {
         type: Number,
         trim: true,
-        required: [true, 'El codigo del cliente es obligatorio'],
+        required: [true, 'El codigo del Aval es obligatorio'],
         unique: true
-    },
-    LoanActive: {
-        type: Boolean,
-        default: false
-    },
-    defaulter: {
-        type: Boolean,
-        default: false
     },
     active: {
         type: Boolean,
@@ -30,4 +22,4 @@ const customerSchema = Schema({
 }, { timestamps: true })
 
 customerSchema.plugin(uniqueValidator, { message: '{PATH} debe ser único' });
-module.exports = model('Customer', customerSchema)
+module.exports = model('Aval', avalSchema)
