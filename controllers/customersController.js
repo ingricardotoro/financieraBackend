@@ -23,11 +23,32 @@ const listCustomer = async(req, res) => {
             customers
         })
 
-        console.log(customers);
     });
 }
 
 const listCustomerByName = async(req, res) => {
+
+}
+
+const lastCodeCustomer = async(req, res) => {
+
+    await Customer.find({},'codeCustomer').sort({codeCustomer : -1}).limit(1)
+    .exec(function(err, LastCode) {
+        //en caso de obtener un error en la Busqueda
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            })
+        }
+
+        res.status(200).json({
+            ok: true,
+            msg: "Ultimo Cliente",
+            LastCode
+        })
+
+    });
 
 }
 
@@ -68,7 +89,7 @@ const createCustomer = async(req, res) => {
             city,
             location,
         })
-
+         
         //guardamos el usuario en la base de datos
         if (await newPerson.save()) {
 
@@ -76,18 +97,30 @@ const createCustomer = async(req, res) => {
 
                 newCustomer = new Customer({
                     codeCustomer,
-                    personid: newPerson._id,
+                    personId: newPerson._id,
                 })
 
-                if (newCustomer.save()) {
+                try {
+                    if (newCustomer.save()) {
 
-                    res.status(201).json({
-                        ok: true,
-                        msg: 'Cliente creado exitosamente',
-                        newPerson,
-                        newCustomer
-                    })
+                        res.status(201).json({
+                            ok: true,
+                            msg: 'Cliente creado exitosamente',
+                            newPerson,
+                            newCustomer
+                        })
+                    }else{
+                        res.status(500).json({
+                            ok: false,
+                            msg: 'Error Creando Nuevo Cliente',
+                            newCustomer
+                        })
+                    }     
+                } catch (error) {
+                    console.log("NUEVO ERROR:")
+                    console.log(error)
                 }
+               
 
             } catch (error) {
                 console.log(error)
@@ -118,4 +151,49 @@ const updateCustomer = async(req, res) => {
 
 }
 
-module.exports = { createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName }
+//Funcion para cambiar el estado del cliente
+const updateActiveCustomer = async(req,res) =>{
+
+    let id = req.params.id
+  
+    try {
+           
+        await Customer.findByIdAndUpdate(id, {active: req.body.active  }, {
+            new: true, //devuelve el objeto actualizado
+        },(err, customerDB) => {
+
+            //en caso de tener algun error en save()
+            if (err) {
+                console.log("ERRORASO");
+                return res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            //evaluaremos si NO se modifico el cliente
+            if (!customerDB) {
+                res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            //en caso de que Si se actualizo el empleado
+            res.status(200).json({
+                ok: true,
+                msj: "Estado Actualizado Exitosamente",
+            })
+
+        } )
+    }
+    catch{
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: "Error Actualizando el Estaod del Cliente"
+        })
+    }
+}
+
+module.exports = { createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer }

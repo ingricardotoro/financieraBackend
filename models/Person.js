@@ -39,7 +39,7 @@ const personSchema = Schema({
     phone1: {
         type: String,
         trim: true,
-        required: [true, 'El id de la persona es obligatorio'],
+        //required: [true, 'El id de la persona es obligatorio'],
     },
     phone2: {
         type: String,
