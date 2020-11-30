@@ -26,6 +26,30 @@ const listCustomer = async(req, res) => {
     });
 }
 
+const findCustomerById = async(req, res) =>{
+
+    let id = req.params.id
+   
+    await Customer.findById(id)
+    .populate('personId')
+    .exec(function(err, customer) {
+        //en caso de obtener un error en la Busqueda
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            })
+        }
+
+        res.status(200).json({
+            ok: true,
+            msg: "Cliente Encontrado",
+            customer
+        })
+
+    });
+}
+
 const listCustomerByName = async(req, res) => {
 
 }
@@ -152,7 +176,7 @@ const updateCustomer = async(req, res) => {
 }
 
 //Funcion para cambiar el estado del cliente
-const updateActiveCustomer = async(req,res) =>{
+const updateActiveCustomer = async(req,res) =>{ 
 
     let id = req.params.id
   
@@ -196,4 +220,4 @@ const updateActiveCustomer = async(req,res) =>{
     }
 }
 
-module.exports = { createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer }
+module.exports = { findCustomerById,createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer }

@@ -13,7 +13,7 @@ const { validarCampo } = require('../middlewares/validarCampo')
 
 
 //importamos los controladores que usaran en las rutas
-const { createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer } = require('../controllers/customersController')
+const { findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer } = require('../controllers/customersController')
 
 //=======================
 //RUTAS
@@ -28,6 +28,12 @@ router.post('/', [
     check('phone1', 'El teléfono de la persona es obligatoria').not().isEmpty(),
     validarCampo
 ], createCustomer)
+
+//Rutas para buscar clientes por ID (POST) .../api/customers/findCustomerById/:id
+router.post('/findCustomerById/:id', [
+    check('id', 'El codeCustomer es obligatorio').not().isEmpty(),
+    validarCampo
+], findCustomerById)
 
 //Ruta para listar a todos los clientes creados
 router.get('/', listCustomer)
