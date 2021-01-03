@@ -25,6 +25,39 @@ const listRequest = async(req, res) => {
         });
 }
 
+//Funcion para obtener el ultimo valor de codigo 
+const lastCodeRequest = async(req, res) => {
+
+    await Request.find({})
+        .sort({ "codeRequest": -1 })
+        .limit(1)
+        .exec(function(err, lastCode) {
+
+            let maxCode = 0
+            if (lastCode[0] === undefined) { //en caso de ser el primer codigo
+                maxCode = 0
+            } else [
+                maxCode = lastCode[0].codeRequest
+            ]
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            res.status(200).json({
+                ok: true,
+                msg: "Ultimo Valor del Codigo de Solicitudes",
+                lastCode: maxCode
+            })
+
+            console.log(maxCode);
+        });
+
+}
+
 //funcion para crear nuevas Solicitudes
 const createRequest = async(req, res) => {
 
@@ -108,4 +141,4 @@ const updateRequest = async(req, res) => {
 
 }
 
-module.exports = { createRequest, listRequest, deleteRequest, updateRequest }
+module.exports = { createRequest, listRequest, deleteRequest, updateRequest, lastCodeRequest }

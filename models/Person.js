@@ -45,7 +45,11 @@ const personSchema = Schema({
         type: String,
         trim: true,
     },
-    email: {
+    email1: {
+        type: String,
+        trim: true,
+    },
+    email2: {
         type: String,
         trim: true,
     },
@@ -58,6 +62,10 @@ const personSchema = Schema({
         trim: true,
     },
     location: {
+        type: String,
+        trim: true,
+    },
+    profesion: {
         type: String,
         trim: true,
     },

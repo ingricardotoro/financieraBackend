@@ -19,7 +19,11 @@ const requestSchema = Schema({
         trim: true,
         required: [true, 'El tipo de prestamos es obligatorio']
     },
-
+    tipoCalculo: { // para determinar si sera por numero de cuotas o por valor de cuotas
+        type: String,
+        trim: true,
+        required: [true, 'El tipo de calculo es obligatorio (numero o valor de cuota)']
+    },
     amount: {
         type: Number,
         required: [true, 'El Monto del prestamo es obligatorio'],
@@ -30,6 +34,16 @@ const requestSchema = Schema({
         required: [true, 'La tasa de interes del prestamos es obligatoria']
     },
     frequency: {
+        type: String,
+        trim: true,
+        required: [true, 'La Frecuencia de pago es obligatoria'],
+    },
+    tipotasa: {
+        type: String,
+        trim: true,
+        required: [true, 'El tipo de tasa es obligatoria'],
+    },
+    tipoInteres: {
         type: String,
         trim: true,
         required: [true, 'La Frecuencia de pago es obligatoria'],
@@ -46,11 +60,15 @@ const requestSchema = Schema({
         type: Number,
         required: [true, 'El Total de interes es obligatorio'],
     },
-    closingCost: {
+    closingCostVar: {
         type: Number,
         required: [true, 'El costo de cierre es obligatorio'],
     },
-    startDate: {
+    totalAmount: {
+        type: Number,
+        required: [true, 'El TotalAmoung es obligatorio'],
+    },
+    datestart: {
         type: Date,
         required: [true, 'La Fecha de Inicio es obligatorio'],
     },
@@ -66,24 +84,53 @@ const requestSchema = Schema({
     stateRequest: {
         type: String,
         trim: true,
-        //required: [true, 'El estado de la solicitud es obligatoria'],
+        required: [true, 'El estado de la solicitud es obligatoria'],
         default: "Pendiente"
+    },
+    refName1: {
+        type: String,
+        trim: true,
+    },
+    refPhone1: {
+        type: String,
+        trim: true,
+    },
+    refRelation1: {
+        type: String,
+        trim: true,
+    },
+    refName2: {
+        type: String,
+        trim: true,
+    },
+    refPhone2: {
+        type: String,
+        trim: true,
+    },
+    refRelation2: {
+        type: String,
+        trim: true,
+    },
+    aval1Id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Aval',
+    },
+    aval2Id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Aval',
     },
 
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        //required: [true, 'El id del empleado es obligatorio'],
     },
     approvedBy: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        //required: [true, 'El id del empleado es obligatorio'],
     },
     declinedBy: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        //required: [true, 'El id del empleado es obligatorio'],
     },
 
 }, { timestamps: true })

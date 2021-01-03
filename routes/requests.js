@@ -13,7 +13,7 @@ const { validarCampo } = require('../middlewares/validarCampo')
 
 
 //importamos los controladores que usaran en las rutas
-const { createRequest, listRequest, deleteRequest, updateRequest } = require('../controllers/requestsController')
+const { createRequest, listRequest, deleteRequest, updateRequest, lastCodeRequest } = require('../controllers/requestsController')
 
 //=======================
 //RUTAS
@@ -42,6 +42,9 @@ router.post('/', [
 router.get('/', listRequest)
     //Ruta para buscar los clientes filtrados por nombre enviado por URL
     //router.get('/:name', listCustomerByName)
+
+//Ruta para obtener el ultimo codigo de las ordenes de compra creadas
+router.post('/lastcode', lastCodeRequest)
 
 //Rutas para crear actualizar cliente por ID (DELETE) .../api/customer/delete/id
 //router.delete('/delete/:id', deleteCustomer)

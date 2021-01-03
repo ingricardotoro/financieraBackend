@@ -89,9 +89,11 @@ const createCustomer = async(req, res) => {
         fec_nac,
         phone1,
         phone2,
-        email,
+        email1,
+        email2,
         city,
         location,
+        profesion,
         codeCustomer,
       
     } = req.body
@@ -109,9 +111,11 @@ const createCustomer = async(req, res) => {
             fec_nac,
             phone1,
             phone2,
-            email,
+            email1,
+            email2,
             city,
             location,
+            profesion,
         })
          
         //guardamos el usuario en la base de datos
