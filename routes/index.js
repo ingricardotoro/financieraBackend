@@ -10,6 +10,9 @@ const app = express()
 //Ruta para la gestion de Clientes
 app.use('/api/customers', require('./customers'))
 
+//Ruta para la gestion de Clientes
+app.use('/api/avals', require('./avals'))
+
 //Ruta para la gestion de Solicitudes
 app.use('/api/requests', require('./requests'))
 

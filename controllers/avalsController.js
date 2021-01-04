@@ -1,14 +1,12 @@
-const Customer = require('../models/Customer')
+const Aval = require('../models/Aval')
 const Person = require('../models/Person')
 
-//const Contact = require('../models/contact')
+//funcion para listar todos los avales
+const listAval = async(req, res) => {
 
-//funcion para listar todos los clientes
-const listCustomer = async(req, res) => {
-
-    await Customer.find({})
+    await listAval.find({})
         .populate('personId')
-        .exec(function(err, customers) {
+        .exec(function(err, avals) {
             //en caso de obtener un error en la Busqueda
             if (err) {
                 return res.status(500).json({
@@ -19,20 +17,21 @@ const listCustomer = async(req, res) => {
 
             res.status(200).json({
                 ok: true,
-                msg: "Lista de Clientes",
-                customers
+                msg: "Lista de Avales",
+                avals
             })
 
         });
 }
 
-const findCustomerById = async(req, res) => {
+//Funcion para realizar busqueda mediante ID
+const findAvalById = async(req, res) => {
 
     let id = req.params.id
 
-    await Customer.findById(id)
+    await avals.findById(id)
         .populate('personId')
-        .exec(function(err, customer) {
+        .exec(function(err, aval) {
             //en caso de obtener un error en la Busqueda
             if (err) {
                 return res.status(500).json({
@@ -43,20 +42,22 @@ const findCustomerById = async(req, res) => {
 
             res.status(200).json({
                 ok: true,
-                msg: "Cliente Encontrado",
-                customer
+                msg: "Aval Encontrado",
+                aval
             })
 
         });
 }
 
-const listCustomerByName = async(req, res) => {
+//Funcion para realizar busqueda mediante Name
+const listAvalByName = async(req, res) => {
 
 }
 
-const lastCodeCustomer = async(req, res) => {
+//Funcion para buscar el ultimo codigo utilizado
+const lastCodeAval = async(req, res) => {
 
-    await Customer.find({}, 'codeCustomer').sort({ codeCustomer: -1 }).limit(1)
+    await Aval.find({}, 'codeAval').sort({ codeAval: -1 }).limit(1)
         .exec(function(err, LastCode) {
             //en caso de obtener un error en la Busqueda
             if (err) {
@@ -68,7 +69,7 @@ const lastCodeCustomer = async(req, res) => {
 
             res.status(200).json({
                 ok: true,
-                msg: "Ultimo Cliente",
+                msg: "Ultimo Codigo",
                 LastCode
             })
 
@@ -76,8 +77,8 @@ const lastCodeCustomer = async(req, res) => {
 
 }
 
-//funcion para crear nuevos clientes
-const createCustomer = async(req, res) => {
+//funcion para crear nuevos Avales
+const createAval = async(req, res) => {
 
     const {
         //personid,
@@ -94,7 +95,7 @@ const createCustomer = async(req, res) => {
         city,
         location,
         profesion,
-        codeCustomer,
+        codeAval,
 
     } = req.body
 
@@ -123,25 +124,25 @@ const createCustomer = async(req, res) => {
 
             try {
 
-                newCustomer = new Customer({
-                    codeCustomer,
+                newAval = new Aval({
+                    codeAval,
                     personId: newPerson._id,
                 })
 
                 try {
-                    if (newCustomer.save()) {
+                    if (newAval.save()) {
 
                         res.status(201).json({
                             ok: true,
-                            msg: 'Cliente creado exitosamente',
+                            msg: 'Aval creado exitosamente',
                             newPerson,
-                            newCustomer
+                            newAval
                         })
                     } else {
                         res.status(500).json({
                             ok: false,
-                            msg: 'Error Creando Nuevo Cliente',
-                            newCustomer
+                            msg: 'Error Creando Nuevo Aval',
+                            newAval
                         })
                     }
                 } catch (error) {
@@ -154,7 +155,7 @@ const createCustomer = async(req, res) => {
                 console.log(error)
                 res.status(500).json({
                     ok: false,
-                    msg: "Error creating New Customer"
+                    msg: "Error creating New Aval"
                 })
             }
 
@@ -171,10 +172,10 @@ const createCustomer = async(req, res) => {
 
 }
 
-const deleteCustomer = async(req, res) => {
+const deleteAval = async(req, res) => {
 
     let id = req.params.id
-    await Customer.findByIdAndRemove(id, (err, customerDB) => {
+    await Aval.findByIdAndRemove(id, (err, customerDB) => {
 
         //en caso de obtener un error en la eliminacion
         if (err) {
@@ -184,25 +185,25 @@ const deleteCustomer = async(req, res) => {
             })
         }
 
-        //en caso que el id no exita, y no encuentre ningun cliente a eliminar
+        //en caso que el id no exita, y no encuentre ningun Aval a eliminar
         if (!customerDB) {
             return res.status(400).json({
                 ok: false,
                 err: {
-                    message: 'El id del cliente no existe'
+                    message: 'El id del aval no existe'
                 }
             })
         }
 
-        //en caso que el cliente ha sido eliminado
+        //en caso que el aval ha sido eliminado
         res.status(200).json({
             ok: true,
-            message: "Cliente Eliminado Exitosamente"
+            message: "Aval Eliminado Exitosamente"
         })
     })
 }
 
-const updateCustomer = async(req, res) => {
+const updateAval = async(req, res) => {
 
 }
 
@@ -213,9 +214,9 @@ const updateActiveCustomer = async(req, res) => {
 
     try {
 
-        await Customer.findByIdAndUpdate(id, { active: req.body.active }, {
+        await Aval.findByIdAndUpdate(id, { active: req.body.active }, {
             new: true, //devuelve el objeto actualizado
-        }, (err, customerDB) => {
+        }, (err, avalDB) => {
 
             //en caso de tener algun error en save()
             if (err) {
@@ -227,7 +228,7 @@ const updateActiveCustomer = async(req, res) => {
             }
 
             //evaluaremos si NO se modifico el cliente
-            if (!customerDB) {
+            if (!avalDB) {
                 res.status(500).json({
                     ok: false,
                     err
@@ -245,9 +246,9 @@ const updateActiveCustomer = async(req, res) => {
         console.log(error)
         res.status(500).json({
             ok: false,
-            msg: "Error Actualizando el Estaod del Cliente"
+            msg: "Error Actualizando el Estaod del Aval"
         })
     }
 }
 
-module.exports = { findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer }
+module.exports = { findAvalById, createAval, listAval, deleteAval, updateAval, listAvalByName, lastCodeAval, updateActiveCustomer }
