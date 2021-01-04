@@ -207,8 +207,8 @@ const updateAval = async(req, res) => {
 
 }
 
-//Funcion para cambiar el estado del cliente
-const updateActiveCustomer = async(req, res) => {
+//Funcion para cambiar el estado del aval
+const updateActiveAval = async(req, res) => {
 
     let id = req.params.id
 
@@ -251,4 +251,4 @@ const updateActiveCustomer = async(req, res) => {
     }
 }
 
-module.exports = { findAvalById, createAval, listAval, deleteAval, updateAval, listAvalByName, lastCodeAval, updateActiveCustomer }
+module.exports = { findAvalById, createAval, listAval, deleteAval, updateAval, listAvalByName, lastCodeAval, updateActiveAval }

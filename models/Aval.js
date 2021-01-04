@@ -21,5 +21,5 @@ const avalSchema = Schema({
 
 }, { timestamps: true })
 
-customerSchema.plugin(uniqueValidator, { message: '{PATH} debe ser único' });
+avalSchema.plugin(uniqueValidator, { message: '{PATH} debe ser único' });
 module.exports = model('Aval', avalSchema)
