@@ -29,12 +29,11 @@ router.post('/', [
     check('quota', 'El numeo de cuotas es obligatoria').not().isEmpty(),
     check('quotaValue', 'El valor de la cuota es obligatoria').not().isEmpty(),
     check('totalInterest', 'El total de interes es obligatoria').not().isEmpty(),
-    check('closingCost', 'El costo de Cierre es obligatorio').not().isEmpty(),
-    check('startDate', 'La fecha de inicio es obligatoria').not().isEmpty(),
+    check('closingCostVar', 'El costo de Cierre es obligatorio').not().isEmpty(),
+    check('datestart', 'La fecha de inicio es obligatoria').not().isEmpty(),
     check('sucursal', 'La Sucursal es obligatoria').not().isEmpty(),
     //check('stateRequest', 'La Sucursal es obligatoria').not().isEmpty(),
     //check('createdBy', 'El id del usuario es obligatorio').not().isEmpty(),
-
     validarCampo
 ], createRequest)
 

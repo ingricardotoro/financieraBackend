@@ -5,7 +5,11 @@ const Request = require('../models/Request')
 const listRequest = async(req, res) => {
 
     await Request.find({})
-        //.populate('personid')
+        //.populate('customerId')
+        .populate({
+            path: 'customerId',
+            populate: { path: 'personId' }
+        })
         .exec(function(err, requests) {
             //en caso de obtener un error en la Busqueda
             if (err) {
@@ -97,9 +101,9 @@ const createRequest = async(req, res) => {
         precioCompra,
         precioMercado,
         obsDeGarantia,
-        createdBy,
+        /*createdBy,
         approvedBy,
-        declinedBy
+        declinedBy*/
 
     } = req.body
 
@@ -140,9 +144,9 @@ const createRequest = async(req, res) => {
         precioCompra,
         precioMercado,
         obsDeGarantia,
-        createdBy,
+        /*createdBy,
         approvedBy,
-        declinedBy
+        declinedBy*/
     })
 
     try {
