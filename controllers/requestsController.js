@@ -29,6 +29,33 @@ const listRequest = async(req, res) => {
         });
 }
 
+const findRequestById = async(req, res) => {
+
+    let id = req.params.id
+
+    await Request.findById(id)
+        .populate({
+            path: 'customerId',
+            populate: { path: 'personId' }
+        })
+        .exec(function(err, request) {
+            //en caso de obtener un error en la Busqueda
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            res.status(200).json({
+                ok: true,
+                msg: "solicitud Encontrado",
+                request
+            })
+
+        });
+}
+
 //Funcion para obtener el ultimo valor de codigo 
 const lastCodeRequest = async(req, res) => {
 
@@ -185,4 +212,4 @@ const updateRequest = async(req, res) => {
 
 }
 
-module.exports = { createRequest, listRequest, deleteRequest, updateRequest, lastCodeRequest }
+module.exports = { createRequest, listRequest, deleteRequest, updateRequest, lastCodeRequest, findRequestById }
