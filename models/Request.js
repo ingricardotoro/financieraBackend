@@ -119,6 +119,38 @@ const requestSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Aval',
     },
+    typeWarranty: {
+        type: String,
+        trim: true,
+    },
+    modelo: {
+        type: String,
+        trim: true,
+    },
+    marca: {
+        type: String,
+        trim: true,
+    },
+    serie: {
+        type: String,
+        trim: true,
+    },
+    anioDeGarantia: {
+        type: String,
+        trim: true,
+    },
+    precioCompra: {
+        type: Number,
+        trim: true,
+    },
+    precioMercado: {
+        type: Number,
+        trim: true,
+    },
+    obsDeGarantia: {
+        type: String,
+        trim: true,
+    },
 
     createdBy: {
         type: Schema.Types.ObjectId,

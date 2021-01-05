@@ -4,7 +4,7 @@ const Person = require('../models/Person')
 //funcion para listar todos los avales
 const listAval = async(req, res) => {
 
-    await listAval.find({})
+    await Aval.find({})
         .populate('personId')
         .exec(function(err, avals) {
             //en caso de obtener un error en la Busqueda
