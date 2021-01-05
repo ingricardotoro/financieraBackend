@@ -13,7 +13,7 @@ const { validarCampo } = require('../middlewares/validarCampo')
 
 
 //importamos los controladores que usaran en las rutas
-const { createRequest, listRequest, deleteRequest, updateRequest, lastCodeRequest, findRequestById } = require('../controllers/requestsController')
+const { createRequest, listRequest, deleteRequest, updateRequest, lastCodeRequest, findRequestById, aproveRequest, declineRequest } = require('../controllers/requestsController')
 
 //=======================
 //RUTAS
@@ -59,6 +59,18 @@ router.post('/lastcode', lastCodeRequest)
     check('phone1', 'El teléfono de la persona es obligatoria').not().isEmpty(),
     validarCampo
 ], updateCustomer)*/
+
+//Funcion para Aprobar la solicitud
+router.put('/aprove/:id', [
+    check('id', 'El id de la solicitud es obligatorio').not().isEmpty(),
+    validarCampo
+], aproveRequest)
+
+//Funcion para denegar la solicitud
+router.put('/decline/:id', [
+    check('id', 'El id de la solicitud es obligatorio').not().isEmpty(),
+    validarCampo
+], declineRequest)
 
 
 module.exports = router

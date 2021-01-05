@@ -208,8 +208,103 @@ const deleteRequest = async(req, res) => {
 
 }
 
+const aproveRequest = async(req, res) => {
+
+    let id = req.params.id
+
+    try {
+
+        await Request.findByIdAndUpdate(id, { stateRequest: 'Aprobada' }, {
+            new: true, //devuelve el objeto actualizado
+        }, (err, requestDB) => {
+
+            //en caso de tener algun error en save()
+            if (err) {
+
+                return res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            //evaluaremos si NO se modifico el cliente
+            if (!requestDB) {
+                res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            //en caso de que Si se actualizo el empleado
+            res.status(200).json({
+                ok: true,
+                msj: "Solicitud Aprobada Exitosamente",
+            })
+
+        })
+    } catch {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: "Error Aprobando la Solicitud"
+        })
+    }
+}
+
+const declineRequest = async(req, res) => {
+
+    let id = req.params.id
+
+    try {
+
+        await Request.findByIdAndUpdate(id, { stateRequest: 'Denegada' }, {
+            new: true, //devuelve el objeto actualizado
+        }, (err, requestDB) => {
+
+            //en caso de tener algun error en save()
+            if (err) {
+
+                return res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            //evaluaremos si NO se modifico el cliente
+            if (!requestDB) {
+                res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            //en caso de que Si se actualizo el empleado
+            res.status(200).json({
+                ok: true,
+                msj: "Solicitud Aprobada Exitosamente",
+            })
+
+        })
+    } catch {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: "Error Aprobando la Solicitud"
+        })
+    }
+}
+
 const updateRequest = async(req, res) => {
 
 }
 
-module.exports = { createRequest, listRequest, deleteRequest, updateRequest, lastCodeRequest, findRequestById }
+module.exports = {
+    createRequest,
+    listRequest,
+    deleteRequest,
+    updateRequest,
+    lastCodeRequest,
+    findRequestById,
+    aproveRequest,
+    declineRequest
+}
