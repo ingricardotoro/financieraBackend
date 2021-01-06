@@ -119,7 +119,7 @@ const requestSchema = Schema({
     aval2Id: {
         type: Schema.Types.ObjectId,
         ref: 'Aval',
-        required: false,
+        required: false
     },
     typeWarranty: {
         type: String,

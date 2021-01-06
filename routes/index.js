@@ -16,4 +16,7 @@ app.use('/api/avals', require('./avals'))
 //Ruta para la gestion de Solicitudes
 app.use('/api/requests', require('./requests'))
 
+//Ruta para la gestion de Prestamos
+app.use('/api/loans', require('./loans'))
+
 module.exports = app
