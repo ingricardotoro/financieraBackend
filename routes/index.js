@@ -19,4 +19,7 @@ app.use('/api/requests', require('./requests'))
 //Ruta para la gestion de Prestamos
 app.use('/api/loans', require('./loans'))
 
+//Ruta para la gestion de Pagos
+app.use('/api/payments', require('./payments'))
+
 module.exports = app

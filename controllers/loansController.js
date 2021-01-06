@@ -58,7 +58,7 @@ const createLoan = async(req, res) => {
 
     } = req.body
 
-    newLoan = new Person({
+    newLoan = new Loan({
         codeLoan,
         requestId,
         amountInitial,
