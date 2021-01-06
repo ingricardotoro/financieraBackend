@@ -12,7 +12,7 @@ const paymentSchema = Schema({
         type: Date,
         required: [true, 'La Fecha del Pago es obligatorio'],
     },
-    amountToPayed: {
+    amountToPay: {
         type: Number,
         required: [true, 'El Capital inicial del prestamo es obligatorio'],
     },

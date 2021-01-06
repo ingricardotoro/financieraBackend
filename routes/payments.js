@@ -22,10 +22,9 @@ const { findPaymentsByLoanId, createPayment, updateState } = require('../control
 router.post('/', [
     check('loanId', 'El loanId es obligatorio').not().isEmpty(),
     check('dateToPay', 'El dateToPay del pago es obligatorio').not().isEmpty(),
-    check('amountToPayed', 'El amountToPayed del pago es obligatorio').not().isEmpty(),
+    check('amountToPay', 'El amountToPay del pago es obligatorio').not().isEmpty(),
     check('amountToCapital', 'La amountToCapital del pago es obligatoria').not().isEmpty(),
     check('amountToInteres', 'El amountToInteres del pago es obligatorio').not().isEmpty(),
-    check('phone1', 'El teléfono de la persona es obligatoria').not().isEmpty(),
     validarCampo
 ], createPayment)
 
