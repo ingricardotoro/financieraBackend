@@ -4,7 +4,9 @@ const Request = require('../models/Request')
 //funcion para listar todos los clientes
 const listRequest = async(req, res) => {
 
-    await Request.find({})
+    await Request.find({}).sort([
+            ['codeRequest', -1]
+        ])
         //.populate('customerId')
         .populate({
             path: 'customerId',

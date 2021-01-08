@@ -47,11 +47,12 @@ const createPayment = async(req, res) => {
 
 }
 
+
 const findPaymentsByLoanId = async(req, res) => {
 
     let id = req.params.id
 
-    await Payment.find({ loanId: id })
+    await Payment.find({ loanId: id }).sort('dateToPay')
         .exec(function(err, payments) {
             //en caso de obtener un error en la Busqueda
             if (err) {
@@ -77,7 +78,19 @@ const updateState = async(req, res) => {
 
     try {
 
-        await Request.findByIdAndUpdate(id, { statusPay: 'Pagada' }, {
+        let data = {
+
+            statusPay: 'Pagada',
+            methodPayed: req.body.methodPayed,
+            amountPayed: req.body.amountPayed,
+            amountToMora: req.body.amountToMora,
+            otherPay: req.body.otherPay,
+            discount: req.body.discount,
+            datePayed: req.body.datePayed
+
+        }
+
+        await Payment.findByIdAndUpdate(id, data, {
             new: true, //devuelve el objeto actualizado
         }, (err, paymentDB) => {
 
@@ -105,7 +118,7 @@ const updateState = async(req, res) => {
             })
 
         })
-    } catch {
+    } catch (error) {
         console.log(error)
         res.status(500).json({
             ok: false,

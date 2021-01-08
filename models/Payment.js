@@ -44,7 +44,7 @@ const paymentSchema = Schema({
         type: Date,
     },
     methodPayed: {
-        type: Number,
+        type: String,
         default: 0
     },
     statusPay: {

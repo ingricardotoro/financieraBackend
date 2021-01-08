@@ -25,8 +25,19 @@ const lastCodeLoan = async(req, res) => {
     //funcion para listar todos los Prestamos
 const listLoans = async(req, res) => {
 
-    await Loan.find({})
-        .populate('requestId')
+    await Loan.find({}).sort([
+            ['codeLoan', -1]
+        ])
+        .populate({
+            path: 'requestId',
+            populate: {
+                path: 'customerId',
+                populate: {
+                    path: 'personId',
+                    model: 'Person',
+                }
+            }
+        })
         .exec(function(err, loans) {
             //en caso de obtener un error en la Busqueda
             if (err) {
@@ -41,6 +52,8 @@ const listLoans = async(req, res) => {
                 msg: "Lista de Prestamos",
                 loans
             })
+
+            console.log(loans)
 
         });
 }
