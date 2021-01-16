@@ -10,7 +10,6 @@
         "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-
     "author": "Ing. Marvin Ricardo Toro",
     "license": "ISC",
     "dependencies": {
@@ -19,6 +18,7 @@
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "express-validator": "^6.6.1",
+        "html-pdf": "^2.2.0",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.10.12",
         "mongoose-unique-validator": "^2.0.3"
