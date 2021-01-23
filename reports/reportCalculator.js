@@ -37,10 +37,10 @@ module.exports = ({ name, price1, price2, receiptId }) => {
              vertical-align: top;
              }
              .invoice-box table tr td:nth-child(2) {
-             text-align: right;
+             text-align: left;
              }
              .invoice-box table tr.top table td {
-             padding-bottom: 20px;
+             padding-bottom: 10px;
              }
              .invoice-box table tr.top table td.title {
              font-size: 45px;
@@ -53,7 +53,7 @@ module.exports = ({ name, price1, price2, receiptId }) => {
                color: #333;
                }
              .invoice-box table tr.information table td {
-             padding-bottom: 40px;
+             padding-bottom: 10px;
              }
              .invoice-box table tr.heading td {
              background: #eee;
@@ -114,56 +114,132 @@ module.exports = ({ name, price1, price2, receiptId }) => {
                 </tr>
                 <tr class="information">
                    <td colspan="2">
+                   <hr />
+
+                   <h3 class="justify-center">Cálculo de Préstamo</h3>   
+                     <hr />
+
                       <table>
                          <tr>
                             <td>Número de Solicitud:
-                            <p class="texto">S010</p>
+                            S010
                             </td>
 
                             <td>Código de Cliente
-                            <p class="texto">C015</p>
+                            C015
                             </td>  
                          </tr>
 
                          <tr>
                             <td>Nombre de Cliente:
-                            <p class="texto">Marvin Ricardo Toro Cruz</p>
+                            Marvin Ricardo Toro Cruz
                             </td>
 
                             <td>Identidad de Cliente
-                            <p class="texto">0801198816155</p>
+                            0801198816155
                             </td>  
                          </tr>
 
                          <tr>
                             <td>Télefono de Cliente:
-                            <p class="texto">3363-8260</p>
+                            3363-8260
                             </td>
 
                             <td>Email de Cliente
-                            <p class="texto">marvintoro@gmail.com</p>
+                            marvintoro@gmail.com
                             </td>  
                          </tr>
 
 
                       </table>
-                   </td>
-                </tr>
-                <tr class="heading">
-                   <td>Bought items:</td>
-                   <td>Price</td>
-                </tr>
-                <tr class="item">
-                   <td>First item:</td>
-                   <td>$</td>
-                </tr>
-                <tr class="item">
-                   <td>Second item:</td>
-                   <td>$</td>
-                </tr>
-             </table>
+
+                     <hr />
+
+                     <table>
+                         <tr>
+                            <th>Tipo de Préstamo:</th>
+                            <td>Solidario</td>
+                              
+                            <th>Monto Solicitado:</th>
+                            <td>LPS. 3000.00</td>
+                         </tr>
+
+                         <tr>
+                            <th>Tipo de Tasa:</th>
+                            <td>Mensual</td>
+                              
+                            <th>Valor de Tasa:</th>
+                            <td>10%</td>
+                         </tr>
+
+                         <tr>
+                            <th>Tipo de Interes:</th>
+                            <td>Compuesto</td>
+                              
+                            <th>Frecuencia de Pago:</th>
+                            <td>Semanal</td>
+                         </tr>
+
+                         <tr>
+                            <th>Número de Cuotas:</th>
+                            <td>12</td>
+                              
+                            <th>Valor de Cuota:</th>
+                            <td>LPS. 354.00</td>
+                         </tr>
+
+                         <tr>
+                           <th>Fecha de Inicio:</th>
+                           <td>Lunes 01/01/2021</td>
+                           
+                           <th>Fecha de Finalizacion:</th>
+                           <td>Lunes 30/03/2021</td>
+                         </tr>
+                        
+                           <tr>
+                              <th>Total de Interes:</th>
+                              <td>LPS. 1,140.00</td>
+                              
+                              <th>Valor de Cierre:</th>
+                              <td>LPS. 200.00</td>
+                           </tr>
+
+                  </table>
+
+                  <hr />
+                  
+
+                  <table>
+
+                     <tr class="heading">
+                        <td>Fecha de Pago:</td>
+                        <td>Saldo</td>
+                        <td>Cuota</td>
+                        <td>Interes</td>
+                        <td>Abono Capital</td>
+                        <td>Saldo Final</td>
+                     </tr>
+                     <tr class="item">
+                        <td>sábado, 16 de enero de 2021</td>
+                        <td>LPS 3200.00</td>
+                        <td>LPS 354.93</td>
+                        <td>LPS 80.00</td>
+                        <td>LPS 274.93</td>
+                        <td>LPS 2925.07</td>
+                     </tr>
+                     <tr class="item">
+                        <td>sábado, 23 de enero de 2021</td>
+                        <td>LPS 2925.07</td>
+                        <td>LPS 354.93</td>
+                        <td>LPS 80.00</td>
+                        <td>LPS 274.93</td>
+                        <td>LPS 2650.13</td>
+                     </tr>
+                  </table>
+
              <br />
-             <h1 class="justify-center">Total price: $</h1>
+
+             
           </div>
        </body>
     </html>
