@@ -1,7 +1,9 @@
 //Creacion de la plantilla HTML del reporte
 module.exports = ({ name, price1, price2, receiptId }) => {
-        const today = new Date();
-        return `
+    const today = new Date();
+    const numeros = [1, 2, 3, 4, 5]
+
+    return `
     <!doctype html>
     <html>
        <head>
@@ -45,6 +47,11 @@ module.exports = ({ name, price1, price2, receiptId }) => {
              line-height: 45px;
              color: #333;
              }
+             .texto {
+               font-size: 18px;
+               line-height: 7px;
+               color: #333;
+               }
              .invoice-box table tr.information table td {
              padding-bottom: 40px;
              }
@@ -87,11 +94,20 @@ module.exports = ({ name, price1, price2, receiptId }) => {
                    <td colspan="2">
                       <table>
                          <tr>
-                            <td class="title"><img  src="https://i2.wp.com/cleverlogos.co/wp-content/uploads/2018/05/reciepthound_1.jpg?fit=800%2C600&ssl=1"
-                               style="width:100%; max-width:156px;"></td>
-                            <td>
-                               Datum: ${`${today.getDate()}. ${today.getMonth() + 1}. ${today.getFullYear()}.`}
+                            <td class="title">
+                              <h2 class="texto">CREDISAS S DE RL DE CV</h2>
+                              <p class="texto">R.T.N. 18079015790858</p>
+                              <p class="texto">BO. EL CENTRO FRENTE A EDIFICIO ALVARES</p>
+                              <p class="texto">OLANCHITO, YORO</p>
+                              <p class="texto">Tel: 9626-5516 WhatsApp:3395-1151</p>
+                              <p class="texto">Email:credisascreditos@gmail.com</p>
+                              
                             </td>
+                            <td class="title">
+                              <p class="texto">Fecha: ${today.getDate()}. ${today.getMonth() + 1}. ${today.getFullYear()}.</p>
+                              <img  src="http://localhost:4000/logocredisa.png"
+                               style="width:100%; max-width:156px;">
+                              </td>
                          </tr>
                       </table>
                    </td>
@@ -100,13 +116,36 @@ module.exports = ({ name, price1, price2, receiptId }) => {
                    <td colspan="2">
                       <table>
                          <tr>
-                            <td>
-                               Customer name: ${name}
+                            <td>Número de Solicitud:
+                            <p class="texto">S010</p>
                             </td>
-                            <td>
-                               Receipt number: ${receiptId}
-                            </td>
+
+                            <td>Código de Cliente
+                            <p class="texto">C015</p>
+                            </td>  
                          </tr>
+
+                         <tr>
+                            <td>Nombre de Cliente:
+                            <p class="texto">Marvin Ricardo Toro Cruz</p>
+                            </td>
+
+                            <td>Identidad de Cliente
+                            <p class="texto">0801198816155</p>
+                            </td>  
+                         </tr>
+
+                         <tr>
+                            <td>Télefono de Cliente:
+                            <p class="texto">3363-8260</p>
+                            </td>
+
+                            <td>Email de Cliente
+                            <p class="texto">marvintoro@gmail.com</p>
+                            </td>  
+                         </tr>
+
+
                       </table>
                    </td>
                 </tr>
@@ -116,15 +155,15 @@ module.exports = ({ name, price1, price2, receiptId }) => {
                 </tr>
                 <tr class="item">
                    <td>First item:</td>
-                   <td>${price1}$</td>
+                   <td>$</td>
                 </tr>
                 <tr class="item">
                    <td>Second item:</td>
-                   <td>${price2}$</td>
+                   <td>$</td>
                 </tr>
              </table>
              <br />
-             <h1 class="justify-center">Total price: ${parseInt(price1) + parseInt(price2)}$</h1>
+             <h1 class="justify-center">Total price: $</h1>
           </div>
        </body>
     </html>

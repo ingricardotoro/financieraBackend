@@ -13,7 +13,7 @@ const reportCalculator = (req, res) => {
         if (err) {
             res.send(Promise.reject())
         } else {
-            console.log(res)
+            //console.log(res)
             res.send(Promise.resolve())
         }
     })
