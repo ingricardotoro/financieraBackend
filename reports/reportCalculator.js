@@ -1,9 +1,140 @@
 //Creacion de la plantilla HTML del reporte
-module.exports = ({ name, price1, price2, receiptId }) => {
-    const today = new Date();
-    const numeros = [1, 2, 3, 4, 5]
+module.exports = (data) => {
+        const today = new Date();
 
-    return `
+        const {
+            quota,
+            quotaValue,
+            totalInterest,
+            amount,
+            rate,
+            typeLoan,
+            frequency,
+            tipotasa,
+            tipoInteres,
+            closingCostVar,
+            datestart
+        } = data
+
+        let CapitalInicial = amount
+        let TipoTasa = tipotasa
+        let Quotas = quota
+        let TipoInteres = tipoInteres
+        let Frequency = frequency
+        let DateStart = datestart
+
+
+        let Tasa = rate
+        let Capitalfinal = 0.0
+        let InteresSemanal = 0.0
+        let AbonoCapital = 0.0
+        let SaldoFinal = 0.0
+        let TotaldeInteres = 0.0
+        let TotalAbonoCapital = 0.0, // si se usan, no borrar
+            TotaldeCuotas = 0.0,
+            TotaldeInteres2 = 0.0
+        let Close = 0.0 //Para guardar el valor a prestar mas el costo de cierre
+        let tasa = 0.0
+        let SaldoInicial = 0.0
+        let periodos = 0,
+            contador = 0,
+            days = 7
+
+        let fecha = Date.parse(DateStart) + 1;
+        fecha = new Date(fecha);
+        fecha.setDate(fecha.getDate() + 1)
+
+        //Obtenemos el valor de la tasa mensual
+        if (TipoTasa === 'Mensual') {
+            tasa = parseInt(Tasa) / 100
+        } else if (TipoTasa === 'Anual') {
+            tasa = (parseInt(Tasa) / 12) / 100
+        }
+
+        //Obtenemos el Valor del Costo de Cierre
+        if (parseFloat(CapitalInicial) >= 5000) {
+            Close = +parseFloat(CapitalInicial) * 0.04
+        } else {
+            Close = 200
+        }
+
+        //Calculo de los Periodos, redondeamos al entero mas alto, 10/4  = 3,  13/4  =4
+        if (Frequency === 'Mensual') {
+            periodos = parseInt(Quotas)
+            days = 30
+        } else if (Frequency === 'Quincenal') {
+            periodos = Math.ceil(parseInt(Quotas) / 2)
+            days = 14
+        } else if (Frequency === 'Semanal') {
+            periodos = Math.ceil(parseInt(Quotas) / 4)
+            days = 7
+        }
+
+        if (Frequency === 'Semanal') { contador = 4 }
+        if (Frequency === 'Quincenal') { contador = 2 }
+        if (Frequency === 'Mensual') { contador = 1 }
+
+        let quotaRows = [] // arreglo de objetos
+
+        //Calculo del interes Compuesto mediante numero de cuotas
+        if (TipoInteres === 'Compuesto') {
+
+            CapitalInicial = parseFloat(CapitalInicial) + (parseFloat(Close)) //3200 //este valor ira cambiando
+                //let CapitalInicial1=parseFloat(CapitalInicial) + (parseFloat(Close))//3200 se usa este valor al finalnuevamente
+                //Calculo de Interes Total Compuesto
+            TotaldeInteres = (CapitalInicial * (Math.pow((1 + tasa), periodos) - 1)) //F4
+                //Calculo del valor de la cuota
+            let quotaValue = ((parseFloat(CapitalInicial) + parseFloat(TotaldeInteres)) / Quotas) //f4
+
+            SaldoInicial = CapitalInicial //3200
+            SaldoFinal = CapitalInicial //3200 Solo para que el while de inicio debe ser distinto de 0
+
+            let cont = 0
+
+            while (SaldoFinal !== 0) {
+
+                Capitalfinal = (parseFloat(CapitalInicial) + parseFloat(CapitalInicial * tasa)) //3520 f2
+                InteresSemanal = ((CapitalInicial * tasa) / contador) //80 f2
+                AbonoCapital = (parseFloat(quotaValue) - parseFloat(InteresSemanal)) //f3
+
+                for (let i = 0; i < contador; i++) {
+
+                    if (SaldoInicial !== 0) {
+
+                        //Localizamos la penultima fila para prepara el valor de cuota de pago de la ultima fila
+                        if (parseFloat(SaldoFinal) + parseFloat(InteresSemanal) < quotaValue) {
+
+                            AbonoCapital = SaldoFinal
+                            quotaValue = AbonoCapital + InteresSemanal
+                        }
+
+                        TotaldeInteres2 += parseFloat(InteresSemanal)
+                        TotaldeCuotas += parseFloat(quotaValue)
+                        TotalAbonoCapital += parseFloat(AbonoCapital)
+
+                        SaldoFinal = ((SaldoInicial) - (AbonoCapital)) //f3
+
+                        quotaRows[cont] = {
+                            cont: cont + 1,
+                            SaldoInicial: SaldoInicial, //3200
+                            InteresSemanal: InteresSemanal, //80
+                            quotaValue: quotaValue, //354
+                            AbonoCapital: AbonoCapital, //274
+                            SaldoFinal: SaldoFinal,
+                            fecha: fecha.setDate(fecha.getDate() + days)
+                        }
+
+                        SaldoInicial = SaldoFinal
+                        cont += 1
+
+                        CapitalInicial = Capitalfinal
+                    }
+
+                }
+            }
+        }
+
+        return `
     <!doctype html>
     <html>
        <head>
@@ -117,75 +248,40 @@ module.exports = ({ name, price1, price2, receiptId }) => {
                    <hr />
 
                    <h3 class="justify-center">Cálculo de Préstamo</h3>   
-                     <hr />
-
-                      <table>
-                         <tr>
-                            <td>Número de Solicitud:
-                            S010
-                            </td>
-
-                            <td>Código de Cliente
-                            C015
-                            </td>  
-                         </tr>
-
-                         <tr>
-                            <td>Nombre de Cliente:
-                            Marvin Ricardo Toro Cruz
-                            </td>
-
-                            <td>Identidad de Cliente
-                            0801198816155
-                            </td>  
-                         </tr>
-
-                         <tr>
-                            <td>Télefono de Cliente:
-                            3363-8260
-                            </td>
-
-                            <td>Email de Cliente
-                            marvintoro@gmail.com
-                            </td>  
-                         </tr>
-
-
-                      </table>
-
+                     
                      <hr />
 
                      <table>
                          <tr>
                             <th>Tipo de Préstamo:</th>
-                            <td>Solidario</td>
+                            <td>${typeLoan}</td>
                               
                             <th>Monto Solicitado:</th>
-                            <td>LPS. 3000.00</td>
+                            <td>LPS. ${amount}</td>
                          </tr>
 
                          <tr>
                             <th>Tipo de Tasa:</th>
-                            <td>Mensual</td>
+                            <td>${tipotasa}</td>
                               
                             <th>Valor de Tasa:</th>
-                            <td>10%</td>
+                            <td>${rate}%</td>
                          </tr>
 
                          <tr>
                             <th>Tipo de Interes:</th>
-                            <td>Compuesto</td>
+                            <td>${tipoInteres}</td>
                               
                             <th>Frecuencia de Pago:</th>
-                            <td>Semanal</td>
+                            <td>${frequency}</td>
                          </tr>
 
                          <tr>
                             <th>Número de Cuotas:</th>
-                            <td>12</td>
+                            <td>${quota}</td>
                               
                             <th>Valor de Cuota:</th>
-                            <td>LPS. 354.00</td>
+                            <td>LPS. ${quotaValue}</td>
                          </tr>
 
                          <tr>
@@ -198,10 +294,10 @@ module.exports = ({ name, price1, price2, receiptId }) => {
                         
                            <tr>
                               <th>Total de Interes:</th>
-                              <td>LPS. 1,140.00</td>
+                              <td>LPS. ${totalInterest}</td>
                               
                               <th>Valor de Cierre:</th>
-                              <td>LPS. 200.00</td>
+                              <td>LPS. ${closingCostVar}</td>
                            </tr>
 
                   </table>
@@ -212,6 +308,7 @@ module.exports = ({ name, price1, price2, receiptId }) => {
                   <table>
 
                      <tr class="heading">
+                        <td>No:</td>
                         <td>Fecha de Pago:</td>
                         <td>Saldo</td>
                         <td>Cuota</td>
@@ -219,22 +316,19 @@ module.exports = ({ name, price1, price2, receiptId }) => {
                         <td>Abono Capital</td>
                         <td>Saldo Final</td>
                      </tr>
-                     <tr class="item">
-                        <td>sábado, 16 de enero de 2021</td>
-                        <td>LPS 3200.00</td>
-                        <td>LPS 354.93</td>
-                        <td>LPS 80.00</td>
-                        <td>LPS 274.93</td>
-                        <td>LPS 2925.07</td>
-                     </tr>
-                     <tr class="item">
-                        <td>sábado, 23 de enero de 2021</td>
-                        <td>LPS 2925.07</td>
-                        <td>LPS 354.93</td>
-                        <td>LPS 80.00</td>
-                        <td>LPS 274.93</td>
-                        <td>LPS 2650.13</td>
-                     </tr>
+
+                     ${quotaRows?.map(quota=>(
+                       `<tr class="item">
+                           <td>${cont}</td>
+                           <td>${(new Date(quota.fecha)).toLocaleDateString()}</td>
+                           <td>LPS ${parseFloat(quota.SaldoInicial).toFixed(2)}</td>
+                           <td>LPS ${parseFloat(quota.quotaValue).toFixed(2)}</td>
+                           <td>LPS ${parseFloat(quota.InteresSemanal).toFixed(2)}</td>
+                           <td>LPS ${parseFloat(quota.AbonoCapital).toFixed(2)}</td>
+                           <td>LPS ${parseFloat(quota.SaldoFinal).toFixed(2)}</td>
+                        </tr>`
+                     ))}
+
                   </table>
 
              <br />
