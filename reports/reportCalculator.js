@@ -16,6 +16,24 @@ module.exports = (data) => {
             datestart
         } = data
 
+        const dias = [
+            'domingo',
+            'lunes',
+            'martes',
+            'miércoles',
+            'jueves',
+            'viernes',
+            'sábado',
+            'domingo',
+        ];
+
+        //funcion para obtener el nombre del
+        const NombreDay = (date) => {
+            let numeroDia = new Date(date).getDay();
+            let nombreDia = dias[numeroDia];
+            return nombreDia
+        }
+
         let CapitalInicial = amount
         let TipoTasa = tipotasa
         let Quotas = quota
@@ -114,14 +132,32 @@ module.exports = (data) => {
 
                         SaldoFinal = ((SaldoInicial) - (AbonoCapital)) //f3
 
-                        quotaRows[cont] = {
-                            cont: cont + 1,
-                            SaldoInicial: SaldoInicial, //3200
-                            InteresSemanal: InteresSemanal, //80
-                            quotaValue: quotaValue, //354
-                            AbonoCapital: AbonoCapital, //274
-                            SaldoFinal: SaldoFinal,
-                            fecha: fecha.setDate(fecha.getDate() + days)
+                        //condicion para inicial el pago en la fecha seleccionada
+                        if (cont === 0) {
+
+                            quotaRows[cont] = {
+                                cont: cont + 1,
+                                SaldoInicial: SaldoInicial, //3200
+                                InteresSemanal: InteresSemanal, //80
+                                quotaValue: quotaValue, //354
+                                AbonoCapital: AbonoCapital, //274
+                                SaldoFinal: SaldoFinal,
+                                day: NombreDay(fecha),
+                                fecha: fecha.setDate(fecha.getDate())
+                            }
+
+                        } else {
+
+                            quotaRows[cont] = {
+                                cont: cont + 1,
+                                SaldoInicial: SaldoInicial, //3200
+                                InteresSemanal: InteresSemanal, //80
+                                quotaValue: quotaValue, //354
+                                AbonoCapital: AbonoCapital, //274
+                                SaldoFinal: SaldoFinal,
+                                day: NombreDay(fecha),
+                                fecha: fecha.setDate(fecha.getDate() + days)
+                            }
                         }
 
                         SaldoInicial = SaldoFinal
@@ -319,8 +355,8 @@ module.exports = (data) => {
 
                      ${quotaRows?.map(quota=>(
                        `<tr class="item">
-                           <td>${cont}</td>
-                           <td>${(new Date(quota.fecha)).toLocaleDateString()}</td>
+                           <td>${quota.cont}</td>
+                           <td>${quota.day +" "+ (new Date(quota.fecha)).toLocaleDateString()}</td>
                            <td>LPS ${parseFloat(quota.SaldoInicial).toFixed(2)}</td>
                            <td>LPS ${parseFloat(quota.quotaValue).toFixed(2)}</td>
                            <td>LPS ${parseFloat(quota.InteresSemanal).toFixed(2)}</td>
@@ -328,6 +364,18 @@ module.exports = (data) => {
                            <td>LPS ${parseFloat(quota.SaldoFinal).toFixed(2)}</td>
                         </tr>`
                      ))}
+                     </table>
+                      <br /> <br /> 
+                     <table>
+                      <tr>
+                        <td>_________________________</td>
+                        <td>_________________________</td>
+                      </tr>
+
+                     <tr class="mt-0">
+                        <td>Firma del Cliente</td>
+                        <td>Firma del Promotor</td>
+                     </tr>
 
                   </table>
 

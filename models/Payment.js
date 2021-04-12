@@ -6,7 +6,11 @@ const paymentSchema = Schema({
     loanId: {
         type: Schema.Types.ObjectId,
         ref: 'Loan',
-        required: [true, 'El id del Prestamo es obligatorio'],
+        required: [true, 'El id del payment es obligatorio'],
+    },
+    code: {
+        type: Number,
+        required: [true, 'El code del payment es obligatorio'],
     },
     dateToPay: {
         type: Date,
@@ -14,7 +18,7 @@ const paymentSchema = Schema({
     },
     amountToPay: {
         type: Number,
-        required: [true, 'El Capital inicial del prestamo es obligatorio'],
+        required: [true, 'La cuota del payment es obligatorio'],
     },
     amountToCapital: {
         type: Number,
@@ -45,6 +49,14 @@ const paymentSchema = Schema({
     },
     methodPayed: {
         type: String,
+        default: 0
+    },
+    balance: {
+        type: Number,
+        default: 0
+    },
+    inFavor: {
+        type: Number,
         default: 0
     },
     statusPay: {

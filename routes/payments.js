@@ -13,7 +13,7 @@ const { validarCampo } = require('../middlewares/validarCampo')
 
 
 //importamos los controladores que usaran en las rutas
-const { findPaymentsByLoanId, createPayment, updateState } = require('../controllers/paymentsController')
+const { findPaymentsByLoanId, createPayment, updatePayment, findPaymentById } = require('../controllers/paymentsController')
 
 //=======================
 //RUTAS
@@ -37,9 +37,15 @@ router.post('/findPaymentsByLoanId/:id', [
 
 //Funcion para actualizar el estado del PAgo  Pendiente-Pagado
 router.put('/updateState/:id', [
-    check('id', 'El valor de Pago es obligatorio').not().isEmpty(),
+    check('id', 'El id de Pago es obligatorio').not().isEmpty(),
     validarCampo
-], updateState)
+], updatePayment)
+
+//Ruta para la busqueda de un payment mediante ID
+router.get('/findPaymentsById/:id', [
+    check('id', 'El id de Pago es obligatorio').not().isEmpty(),
+    validarCampo
+], findPaymentById)
 
 
 module.exports = router

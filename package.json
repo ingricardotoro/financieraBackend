@@ -20,7 +20,8 @@
         "express-validator": "^6.6.1",
         "html-pdf": "^2.2.0",
         "jsonwebtoken": "^8.5.1",
-        "mongoose": "^5.10.12",
+        "moment": "^2.29.1",
+        "mongoose": "^5.12.3",
         "mongoose-unique-validator": "^2.0.3"
     }
 }
