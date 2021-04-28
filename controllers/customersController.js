@@ -250,4 +250,90 @@ const updateActiveCustomer = async(req, res) => {
     }
 }
 
-module.exports = { findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer }
+
+
+const savePerson = async(customer) => {
+
+    //const codeCustomer = customer[0]
+    const name = customer[1]
+    const lastname = customer[2]
+    const identidad = customer[3]
+    const rtn = customer[4]
+    const gender = customer[5]
+    const fec_nac = customer[6]
+    const phone1 = customer[7]
+    const phone2 = customer[8]
+    const email1 = customer[9]
+    const email2 = customer[10]
+    const country = customer[11]
+    const city = customer[12]
+    const location = customer[13]
+    const profesion = customer[14]
+
+    //creamos una instancia del objeto Persona
+    let newPerson = new Person({
+        name,
+        lastname,
+        identidad,
+        gender,
+        rtn,
+        fec_nac,
+        phone1,
+        phone2,
+        email1,
+        email2,
+        country,
+        city,
+        location,
+        profesion,
+    })
+
+    if (await newPerson.save()) {
+        return newPerson
+    }
+
+}
+
+const saveCustomer = async(newPerson, codeCustomer) => {
+
+    let newCustomer = new Customer({
+        codeCustomer,
+        personId: newPerson._id,
+    })
+
+    if (await newCustomer.save()) {
+        return newCustomer
+    }
+
+}
+
+//funcion para subir archivo de excel de nuevos clientes
+const uploadCustomer = async(req, res) => {
+
+    let newsCustomers = []
+    newsCustomers = req.body.rows
+    newsCustomers.map((customer) => {
+        let codeCustomer = customer[0]
+            //console.log(customer)
+        if (customer[0] !== 'codeCustomer') {
+
+            savePerson(customer).then((newPerson) => {
+                console.log("NEWP=" + newPerson._id)
+                saveCustomer(newPerson, codeCustomer).then((newCustomer) => {
+                    console.log("Customer creado. " + newCustomer)
+                })
+
+            }).catch((err) => {
+                console.log("Err=" + err)
+            })
+        }
+
+    })
+
+    return res.status(200).json({
+        ok: true,
+    })
+
+}
+
+module.exports = { findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer, uploadCustomer }

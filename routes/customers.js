@@ -13,7 +13,7 @@ const { validarCampo } = require('../middlewares/validarCampo')
 
 
 //importamos los controladores que usaran en las rutas
-const { findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer } = require('../controllers/customersController')
+const { findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer, uploadCustomer } = require('../controllers/customersController')
 
 //=======================
 //RUTAS
@@ -34,6 +34,12 @@ router.post('/findCustomerById/:id', [
     check('id', 'El Id del Customer es obligatorio').not().isEmpty(),
     validarCampo
 ], findCustomerById)
+
+//Rutas para subir excel de nuevos clientes (POST) .../api/customers/upload
+router.post('/upload', [
+    //check('id', 'El Id del Customer es obligatorio').not().isEmpty(),
+    validarCampo
+], uploadCustomer)
 
 //Ruta para listar a todos los clientes creados
 router.get('/', listCustomer)
