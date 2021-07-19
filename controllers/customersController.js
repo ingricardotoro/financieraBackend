@@ -296,14 +296,22 @@ const savePerson = async(customer) => {
 
 const saveCustomer = async(newPerson, codeCustomer) => {
 
-    let newCustomer = new Customer({
-        codeCustomer,
-        personId: newPerson._id,
-    })
-
-    if (await newCustomer.save()) {
-        return newCustomer
+    try {
+        let newCustomer = new Customer({
+            codeCustomer,
+            personId: newPerson._id,
+        })
+        if (await newCustomer.save()) {
+            return newCustomer
+        } else {
+            console.log("Error creando nuevo usuario")
+        }
+    } catch (error) {
+        console.log("ERROR CATCH:" + error)
     }
+
+
+
 
 }
 
