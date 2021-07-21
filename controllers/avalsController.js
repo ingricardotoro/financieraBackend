@@ -29,7 +29,7 @@ const findAvalById = async(req, res) => {
 
     let id = req.params.id
 
-    await avals.findById(id)
+    await Aval.findById(id)
         .populate('personId')
         .exec(function(err, aval) {
             //en caso de obtener un error en la Busqueda
@@ -57,9 +57,12 @@ const listAvalByName = async(req, res) => {
 //Funcion para buscar el ultimo codigo utilizado
 const lastCodeAval = async(req, res) => {
 
-    await Aval.find({}, 'codeAval').sort({ codeAval: -1 }).limit(1)
+    await Aval.find({}, 'numAval').sort({ numAval: -1 }).limit(1)
         .exec(function(err, LastCode) {
             //en caso de obtener un error en la Busqueda
+
+            console.log("LastCode=" + JSON.stringify(LastCode.length))
+                //if (LastCode.length === 0) { LastCode = 0 }
             if (err) {
                 return res.status(500).json({
                     ok: false,
@@ -95,6 +98,7 @@ const createAval = async(req, res) => {
         city,
         location,
         profesion,
+        numAval,
         codeAval,
 
     } = req.body
@@ -126,6 +130,7 @@ const createAval = async(req, res) => {
 
                 newAval = new Aval({
                     codeAval,
+                    numAval,
                     personId: newPerson._id,
                 })
 

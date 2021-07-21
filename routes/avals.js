@@ -21,6 +21,7 @@ const { findAvalById, createAval, listAval, deleteAval, updateAval, listAvalByNa
 //Rutas para crear nuevos clientes (POST) .../api/avals
 router.post('/', [
     check('codeAval', 'El codeAval es obligatorio').not().isEmpty(),
+    check('numAval', 'El numAval es obligatorio').not().isEmpty(),
     check('name', 'El nombre de la persona es obligatorio').not().isEmpty(),
     check('lastname', 'El apellido de la persona es obligatorio').not().isEmpty(),
     check('identidad', 'La identidad de la persona es obligatoria').not().isEmpty(),
@@ -48,7 +49,6 @@ router.delete('/delete/:id', [
 //Rutas para crear actualizar Avales (PUT) .../api/avals/update/id
 router.put('/update/:id', [
     check('personid', 'El personId es obligatorio').not().isEmpty(),
-    check('codeAval', 'El codeAval es obligatorio').not().isEmpty(),
     check('name', 'El nombre de la persona es obligatorio').not().isEmpty(),
     check('lastname', 'El apellido de la persona es obligatorio').not().isEmpty(),
     check('gender', 'El género de la persona es obligatorio').not().isEmpty(),

@@ -56,7 +56,7 @@ const listCustomerByName = async(req, res) => {
 
 const lastCodeCustomer = async(req, res) => {
 
-    await Customer.find({}, 'codeCustomer').sort({ codeCustomer: -1 }).limit(1)
+    await Customer.find({}, 'numCustomer').sort({ numCustomer: -1 }).limit(1)
         .exec(function(err, LastCode) {
             //en caso de obtener un error en la Busqueda
             if (err) {
@@ -95,6 +95,7 @@ const createCustomer = async(req, res) => {
         location,
         profesion,
         codeCustomer,
+        numCustomer,
 
     } = req.body
 
@@ -124,7 +125,8 @@ const createCustomer = async(req, res) => {
             try {
 
                 newCustomer = new Customer({
-                    codeCustomer,
+                    codeCustomer: 'C' + codeCustomer,
+                    numCustomer,
                     personId: newPerson._id,
                 })
 
@@ -203,6 +205,69 @@ const deleteCustomer = async(req, res) => {
 }
 
 const updateCustomer = async(req, res) => {
+
+    //let id = req.params.id //id del customer
+    let body = req.body
+    const personid = body.personId
+
+    let updatePersona = {
+
+        name: body.name,
+        lastname: body.lastname,
+        identidad: body.identidad,
+        gender: body.gender,
+        rtn: body.rtn,
+        fec_nac: body.fec_nac,
+        phone1: body.phone1,
+        phone2: body.phone2,
+        email1: body.email1,
+        email2: body.email2,
+        profesion: body.profesion,
+        city: body.city,
+        location: body.location,
+
+    }
+
+    try {
+
+        Person.findByIdAndUpdate(personid, updatePersona, { new: true, runValidators: true },
+            (err, personDB) => {
+
+                //en caso de tener algun error en save()
+                if (err) {
+                    res.status(500).json({
+                        ok: false,
+                        err
+                    })
+                }
+
+                //evaluaremos si NO se modifico el customer
+                else if (!personDB) {
+                    res.status(400).json({
+                        ok: false,
+                        err
+                    })
+                }
+
+                //en caso de que Si se actualizo el customer
+                res.status(200).json({
+                    ok: true,
+                    msj: "Customer Actualizado Exitosamente",
+                    empleadoActualizado: personDB,
+                    datosPersona: personDB
+                })
+            })
+
+    } catch (error) {
+
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: "Error Actualizando Datos de Persona de Customer"
+        })
+    }
+
+
 
 }
 
@@ -298,7 +363,8 @@ const saveCustomer = async(newPerson, codeCustomer) => {
 
     try {
         let newCustomer = new Customer({
-            codeCustomer,
+            codeCustomer: 'C' + codeCustomer,
+            numCustomer: codeCustomer,
             personId: newPerson._id,
         })
         if (await newCustomer.save()) {
@@ -320,13 +386,15 @@ const uploadCustomer = async(req, res) => {
 
     let newsCustomers = []
     newsCustomers = req.body.rows
+
     newsCustomers.map((customer) => {
         let codeCustomer = customer[0]
             //console.log(customer)
         if (customer[0] !== 'codeCustomer') {
+            //  customer.numCustomer = customer[0]
 
             savePerson(customer).then((newPerson) => {
-                console.log("NEWP=" + newPerson._id)
+
                 saveCustomer(newPerson, codeCustomer).then((newCustomer) => {
                     console.log("Customer creado. " + newCustomer)
                 })

@@ -8,8 +8,14 @@ const avalSchema = Schema({
         ref: 'Person',
         required: [true, 'El id de la persona es obligatorio'],
     },
-    codeAval: {
+    numAval: {
         type: Number,
+        trim: true,
+        required: [true, 'El numero del Aval es obligatorio'],
+        unique: true
+    },
+    codeAval: {
+        type: String,
         trim: true,
         required: [true, 'El codigo del Aval es obligatorio'],
         unique: true

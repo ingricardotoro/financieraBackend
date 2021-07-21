@@ -20,6 +20,7 @@ const { findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCu
 //=======================
 //Rutas para crear nuevos clientes (POST) .../api/customers
 router.post('/', [
+    check('numCustomer', 'El numero de Cliente es obligatorio').not().isEmpty(),
     check('codeCustomer', 'El codeCustomer es obligatorio').not().isEmpty(),
     check('name', 'El nombre de la persona es obligatorio').not().isEmpty(),
     check('lastname', 'El apellido de la persona es obligatorio').not().isEmpty(),
@@ -49,14 +50,13 @@ router.get('/lastCode', lastCodeCustomer)
 
 //Rutas para crear actualizar cliente por ID (DELETE) .../api/customer/delete/id
 router.delete('/delete/:id', [
-    check('id', 'El ID del Customer es obligatorio').not().isEmpty(),
-    validarCampo
-], deleteCustomer)
-
-//Rutas para crear actualizar clientes (PUT) .../api/customers/update/id
+        check('id', 'El ID del Customer es obligatorio').not().isEmpty(),
+        validarCampo
+    ], deleteCustomer)
+    //mateo bonilla 2B
+    //Rutas para crear actualizar clientes (PUT) .../api/customers/update/id
 router.put('/update/:id', [
-    check('personid', 'El personId es obligatorio').not().isEmpty(),
-    check('codeCustomer', 'El codeCustomer es obligatorio').not().isEmpty(),
+    check('personId', 'El personId es obligatorio').not().isEmpty(),
     check('name', 'El nombre de la persona es obligatorio').not().isEmpty(),
     check('lastname', 'El apellido de la persona es obligatorio').not().isEmpty(),
     check('gender', 'El género de la persona es obligatorio').not().isEmpty(),

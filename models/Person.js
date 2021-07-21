@@ -18,7 +18,7 @@ const personSchema = Schema({
     identidad: {
         type: String,
         trim: true,
-        unique: true,
+        //unique: true,
         required: [true, 'El número de identidad es obligatorio']
     },
     rtn: {

@@ -8,11 +8,22 @@ const customerSchema = Schema({
         ref: 'Person',
         required: [true, 'El id de la persona es obligatorio'],
     },
-    codeCustomer: {
+    numCustomer: {
         type: Number,
+        trim: true,
+        required: [true, 'El numero del cliente es obligatorio'],
+        unique: true
+    },
+    codeCustomer: {
+        type: String,
         trim: true,
         required: [true, 'El codigo del cliente es obligatorio'],
         unique: true
+    },
+    balance: {
+        type: Number,
+        trim: true,
+        default: 0.0
     },
     LoanActive: {
         type: Boolean,
