@@ -13,10 +13,10 @@ const app = express()
 app.use(cors())
 
 //definir el directorio publico
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public/customers/photos'))
 
 //para permitir el contenido de peticiones json en req.body 
-app.use(express.json())
+app.use(express.json({ limit: '50mb' }))
 
 //hacemos el llamado de las rutas del routes
 app.use(require('./routes/index'))

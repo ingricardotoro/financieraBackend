@@ -1,3 +1,4 @@
+const { upload } = require('../lib/fileHelper');
 const Customer = require('../models/Customer')
 const Person = require('../models/Person')
 
@@ -96,6 +97,7 @@ const createCustomer = async(req, res) => {
         profesion,
         codeCustomer,
         numCustomer,
+        file
 
     } = req.body
 
@@ -139,6 +141,10 @@ const createCustomer = async(req, res) => {
                             newPerson,
                             newCustomer
                         })
+
+                        //en caso de haber creado la persona y el cliente, subimos su fotografia
+                        uploadPhotoCustomer(newPerson._id, file)
+
                     } else {
                         res.status(500).json({
                             ok: false,
@@ -171,6 +177,41 @@ const createCustomer = async(req, res) => {
         })
     }
 
+}
+
+//funcion para subir la fotografia del cliente
+const uploadPhotoCustomer = async(req, res) => {
+
+    const personid = req.params.personid //id del URL
+    const photo = req.file.filename
+    const newPhotoData = { photo }
+
+    Person.findByIdAndUpdate(personid, newPhotoData, { new: true, runValidators: true },
+        (err, personDB) => {
+
+            //en caso de tener algun error en save()
+            if (err) {
+                res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            //evaluaremos si NO se modifico el customer
+            else if (!personDB) {
+                res.status(400).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            res.status(200).json({
+                ok: true,
+                msj: "Photo Actualizado Exitosamente",
+                datosPersona: personDB
+            })
+
+        })
 }
 
 const deleteCustomer = async(req, res) => {
@@ -209,6 +250,7 @@ const updateCustomer = async(req, res) => {
     //let id = req.params.id //id del customer
     let body = req.body
     const personid = body.personId
+    const file = body.file
 
     let updatePersona = {
 
@@ -249,6 +291,9 @@ const updateCustomer = async(req, res) => {
                     })
                 }
 
+                //actualizamos la photo
+                //uploadPhotoCustomer(personid, file)
+
                 //en caso de que Si se actualizo el customer
                 res.status(200).json({
                     ok: true,
@@ -270,6 +315,8 @@ const updateCustomer = async(req, res) => {
 
 
 }
+
+
 
 //Funcion para cambiar el estado del cliente
 const updateActiveCustomer = async(req, res) => {
@@ -314,8 +361,6 @@ const updateActiveCustomer = async(req, res) => {
         })
     }
 }
-
-
 
 const savePerson = async(customer) => {
 
@@ -412,4 +457,4 @@ const uploadCustomer = async(req, res) => {
 
 }
 
-module.exports = { findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer, uploadCustomer }
+module.exports = { uploadPhotoCustomer, findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer, uploadCustomer }

@@ -13,7 +13,8 @@ const { validarCampo } = require('../middlewares/validarCampo')
 
 
 //importamos los controladores que usaran en las rutas
-const { findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer, uploadCustomer } = require('../controllers/customersController')
+const { uploadPhotoCustomer, findCustomerById, createCustomer, listCustomer, deleteCustomer, updateCustomer, listCustomerByName, lastCodeCustomer, updateActiveCustomer, uploadCustomer } = require('../controllers/customersController')
+const { upload } = require('../lib/fileHelper')
 
 //=======================
 //RUTAS
@@ -64,6 +65,11 @@ router.put('/update/:id', [
     check('phone1', 'El teléfono de la persona es obligatoria').not().isEmpty(),
     validarCampo
 ], updateCustomer)
+
+
+//router.post('/updatephoto', upload.single('file'))
+//router.post('/subirfoto', upload.single('file'))
+router.post('/subirfoto/:personid', upload.single('file'), uploadPhotoCustomer)
 
 //Funcion para actualizar el estado del Cliente  Active-NoActivo
 router.put('/updateActive/:id', [
