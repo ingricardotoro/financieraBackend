@@ -39,6 +39,7 @@ const findRequestById = async(req, res) => {
         .populate({
             path: 'customerId',
             populate: { path: 'personId' }
+
         })
         .exec(function(err, request) {
             //en caso de obtener un error en la Busqueda
@@ -94,7 +95,7 @@ const lastCodeRequest = async(req, res) => {
 //funcion para crear nuevas Solicitudes
 const createRequest = async(req, res) => {
 
-    const {
+    let {
 
         customerId,
         codeRequest,
@@ -136,6 +137,8 @@ const createRequest = async(req, res) => {
 
     } = req.body
 
+    if (aval1Id === "") { aval1Id = null }
+    if (aval2Id === "") { aval2Id = null; }
 
     //creamos una instancia del objeto Persona
     newRequest = new Request({

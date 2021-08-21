@@ -111,16 +111,16 @@ const requestSchema = Schema({
         type: String,
         trim: true,
     },
-    aval1Id: [{
+    aval1Id: {
         type: Schema.Types.ObjectId,
         ref: 'Aval',
         required: false,
-    }],
-    aval2Id: [{
+    },
+    aval2Id: {
         type: Schema.Types.ObjectId,
         ref: 'Aval',
         required: false
-    }],
+    },
     typeWarranty: {
         type: String,
         trim: true,
