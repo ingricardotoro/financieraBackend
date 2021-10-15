@@ -3,34 +3,47 @@
 //Rutas : localhost:4000/api/loans
 //===============================
 
-const { Router } = require('express')
+const { Router } = require('express');
 
-const router = Router()
-const { check } = require('express-validator')
+const router = Router();
+const { check } = require('express-validator');
 
 //importamos Middleware para verificar los errores que viajan en req
-const { validarCampo } = require('../middlewares/validarCampo')
+const { validarCampo } = require('../middlewares/validarCampo');
 
 //importamos los controladores que usaran en las rutas
-const { createLoan, listLoans, lastCodeLoan } = require('../controllers/loansController')
+const {
+    createLoan,
+    listLoans,
+    lastCodeLoan,
+} = require('../controllers/loansController');
 
 //=======================
 //RUTAS
 //=======================
 //Rutas para crear nuevos clientes (POST) .../api/loans
-router.post('/', [
-    check('requestId', 'El requestId es obligatorio').not().isEmpty(),
-    check('amountInitial', 'El amountInitial del prestamo es obligatorio').not().isEmpty(),
-    check('totalToPay', 'El totalToPay del prestamos es obligatorio').not().isEmpty(),
-    check('dateaproved', 'El dateaproved del prestamos es obligatorio').not().isEmpty(),
-    validarCampo
-], createLoan)
+router.post(
+    '/', [
+        check('requestId', 'El requestId es obligatorio').not().isEmpty(),
+        check('amountInitial', 'El amountInitial del prestamo es obligatorio')
+        .not()
+        .isEmpty(),
+        check('totalToPay', 'El totalToPay del prestamos es obligatorio')
+        .not()
+        .isEmpty(),
+        check('dateaproved', 'El dateaproved del prestamos es obligatorio')
+        .not()
+        .isEmpty(),
+        validarCampo,
+    ],
+    createLoan
+);
 
 //Ruta para listar a todos los prestasmos creados
-router.get('/', listLoans)
+router.get('/', listLoans);
 
 //Ruta para buscar el ultimo valor de codigo utilizado
-router.get('/lastCode', lastCodeLoan)
+router.get('/lastCode', lastCodeLoan);
 
 //Rutas para crear eliminar por ID (DELETE) .../api/customer/delete/id
 /*router.delete('/delete/:id', [
@@ -56,5 +69,4 @@ router.get('/lastCode', lastCodeLoan)
     validarCampo
 ], updateActiveCustomer)*/
 
-
-module.exports = router
+module.exports = router;
